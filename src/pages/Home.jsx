@@ -1,81 +1,51 @@
-import React, { useEffect } from "react";
-import { Form } from "react-router-dom";
-import { getAllUsers } from "../api/users.api";
+import React, { useEffect, useState, useLayoutEffect } from "react";
+import { Box, Stack, Paper } from "@mui/material";
+import Button from "../components/UI/Button";
+import PostCard from "../components/PostCard/PostCard";
+import Grid from "@mui/material/Grid";
+import PostList from "../components/PostList";
+import Heading from "../components/UI/Heading";
+import PaginationList from "../components/PaginationList";
+import { getPostsByPage, getAllPosts } from "../api/posts.api";
+import PostHero from "../components/PostHero";
+import PostHeroSection from "../components/PostHero/PostHeroSection";
+
 export default function Home() {
-	const contact = {
-		first: "Your",
-		last: "Name",
-		avatar: "https://placekitten.com/g/200/200",
-		twitter: "your_handle",
-		notes: "Some notes",
-		favorite: true,
-	};
+	const [loading, setLoading] = useState(true);
+	const [posts, setPosts] = useState([]);
+
+	async function getData() {
+		const result = await getAllPosts();
+		console.log({ data: result });
+		setPosts(result);
+	}
 
 	useEffect(() => {
-		getAllUsers();
+		async function effect() {
+			await getData();
+		}
+		effect();
 	}, []);
 
 	return (
-		<div id="contact">
-			<div>
-				<img key={contact.avatar} src={contact.avatar || null} />
-			</div>
-
-			<div>
-				<h1>
-					{contact.first || contact.last ? (
-						<>
-							{contact.first} {contact.last}
-						</>
-					) : (
-						<i>No Name</i>
-					)}{" "}
-					<Favorite contact={contact} />
-				</h1>
-
-				{contact.twitter && (
-					<p>
-						<a target="_blank" href={`https://twitter.com/${contact.twitter}`}>
-							{contact.twitter}
-						</a>
-					</p>
-				)}
-
-				{contact.notes && <p>{contact.notes}</p>}
-
-				<div>
-					<Form action="edit">
-						<button type="submit">Edit</button>
-					</Form>
-					<Form
-						method="post"
-						action="destroy"
-						onSubmit={(event) => {
-							if (!confirm("Please confirm you want to delete this record.")) {
-								event.preventDefault();
-							}
-						}}
-					>
-						<button type="submit">Delete</button>
-					</Form>
-				</div>
-			</div>
-		</div>
-	);
-}
-
-function Favorite({ contact }) {
-	// yes, this is a `let` for later
-	let favorite = contact.favorite;
-	return (
-		<Form method="post">
-			<button
-				name="favorite"
-				value={favorite ? "false" : "true"}
-				aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-			>
-				{favorite ? "★" : "☆"}
-			</button>
-		</Form>
+		<Box
+			id="home"
+			sx={{
+				mt: 1,
+				mb: 5,
+			}}
+		>
+			<Stack spacing={4}>
+				<Box>
+					<Heading> Trending Posts </Heading>
+					<PostHeroSection postsList={posts} />
+				</Box>
+				<Box>
+					<Heading> Total Posts | {posts.length}</Heading>
+					{/* <PostList /> */}
+					<PaginationList listOfPosts={posts} />
+				</Box>
+			</Stack>
+		</Box>
 	);
 }

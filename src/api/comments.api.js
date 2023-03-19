@@ -1,9 +1,9 @@
-import fetchData, { createData } from "./fetch.api";
+import fetchData from "./fetch.api";
 import api_url from "./url";
 
-export async function getAllUsers() {
+export async function getCommentsByUserId(id) {
 	try {
-		const result = await fetchData(`${api_url}/users`);
+		const result = await fetchData(`${api_url}/comments?postedBy=${id}`);
 		console.log({ result });
 		return result;
 	} catch (error) {
@@ -12,9 +12,9 @@ export async function getAllUsers() {
 	}
 }
 
-export async function getUserById(id) {
+export async function getCommentsByPostId(id) {
 	try {
-		const result = await fetchData(`${api_url}/users/${id}`);
+		const result = await fetchData(`${api_url}/comments?postId=${id}`);
 		console.log({ result });
 		return result;
 	} catch (error) {
@@ -23,9 +23,9 @@ export async function getUserById(id) {
 	}
 }
 
-export async function createNewUser(body) {
+export async function getAllComents() {
 	try {
-		const result = await createData(`${api_url}/users`, body);
+		const result = await fetchData(`${api_url}/comments`);
 		console.log({ result });
 		return result;
 	} catch (error) {
