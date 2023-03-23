@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import PostHero from "../PostHero";
+import PostHero from "./PostHero";
+import Slide from "@mui/material/Slide";
+import sleep from "../../utils/sleep.util";
 export default function PostHeroSection({ postsList }) {
 	const [postList, setPostList] = useState(postsList ? postsList : []);
 	const [trendingPost, setTrendingPost] = useState(postsList ? postsList[0] : null);
 	const [checked, setChecked] = useState(true);
 	async function getRandomPost() {
-		setTrendingPost(postList[Math.floor(Math.random() * postList.length + 1)]);
 		setChecked(false);
+		await sleep(800);
+		setTrendingPost(postList[Math.floor(Math.random() * postList.length + 1)]);
+		setChecked(true);
 	}
 
 	useEffect(() => {
 		if (postsList) {
-			getRandomPost(postsList);
+			setTrendingPost(postsList[0]);
 			setPostList(postsList);
 		}
 	}, [postsList]);
 
 	useEffect(() => {
-		const interval = setInterval(getRandomPost, 5000);
+		const interval = setInterval(getRandomPost, 5000); // 30 seconds in millisecond
 		return () => {
 			clearInterval(interval);
 		};
@@ -25,7 +29,11 @@ export default function PostHeroSection({ postsList }) {
 
 	return (
 		<>
-			<PostHero setChecked={setChecked} checked={checked} post={trendingPost} />
+			<Slide direction="right" in={checked} timeout={600} mountOnEnter unmountOnExit>
+				<div>
+					<PostHero post={trendingPost} />
+				</div>
+			</Slide>
 		</>
 	);
 }

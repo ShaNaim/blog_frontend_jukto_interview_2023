@@ -1,23 +1,22 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { Box, Stack, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Stack } from "@mui/material";
 import Button from "../components/UI/Button";
-import PostCard from "../components/PostCard/PostCard";
-import Grid from "@mui/material/Grid";
-import PostList from "../components/PostList";
 import Heading from "../components/UI/Heading";
 import PaginationList from "../components/PaginationList";
-import { getPostsByPage, getAllPosts } from "../api/posts.api";
-import PostHero from "../components/PostHero";
+import { getAllPosts } from "../api/posts.api";
 import PostHeroSection from "../components/PostHero/PostHeroSection";
-
+import Link from "../components/UI/Link";
+import FullBleed from "../components/UI/FullBleed";
+import { useDispatch, useSelector } from "react-redux";
+import { setPostState } from "../redux/post.slice";
 export default function Home() {
-	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
-
+	const dispatch = useDispatch();
 	async function getData() {
 		const result = await getAllPosts();
 		console.log({ data: result });
 		setPosts(result);
+		dispatch(setPostState(result));
 	}
 
 	useEffect(() => {
@@ -36,14 +35,22 @@ export default function Home() {
 			}}
 		>
 			<Stack spacing={4}>
-				<Box>
+				<Box sx={{ minHeight: "400px" }}>
 					<Heading> Trending Posts </Heading>
 					<PostHeroSection postsList={posts} />
 				</Box>
-				<Box>
-					<Heading> Total Posts | {posts.length}</Heading>
-					{/* <PostList /> */}
-					<PaginationList listOfPosts={posts} />
+				<Box sx={{ backgroundColor: "#ceeff584" }}>
+					<FullBleed>
+						<Stack direction="row" justifyContent="space-between" sx={{ p: 2 }}>
+							<Heading> Total Posts | {posts.length}</Heading>
+							<Link to="/posts/create">
+								<Button size="small" sx={{ m: 1 }}>
+									Create Post
+								</Button>
+							</Link>
+						</Stack>
+						<PaginationList listOfPosts={posts} />
+					</FullBleed>
 				</Box>
 			</Stack>
 		</Box>

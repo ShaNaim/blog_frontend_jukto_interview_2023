@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import PostCard from "./PostCard/PostCard";
 import PostCardSkeleton from "./PostCard/PostCardSkeleton";
+import Slide from "@mui/material/Slide";
 export default function PostList({ list }) {
 	const [count, setCount] = useState([1, 2, 3]);
+	const [checked, setChecked] = useState(false);
 	useEffect(() => {
+		setChecked(true);
 		list.length !== 0 && setCount([...Array(list.length).keys()]);
 	}, [list]);
 	return (
@@ -12,9 +15,18 @@ export default function PostList({ list }) {
 			{list.length !== 0 ? (
 				<>
 					{list.map((post, index) => (
-						<Grid item xs={12} sm={4} md={4} key={index}>
-							<PostCard post={post} />
-						</Grid>
+						<Slide
+							key={index}
+							timeout={600}
+							direction="right"
+							in={checked}
+							mountOnEnter
+							unmountOnExit
+						>
+							<Grid item xs={12} sm={4} md={4}>
+								<PostCard post={post} />
+							</Grid>
+						</Slide>
 					))}
 				</>
 			) : (

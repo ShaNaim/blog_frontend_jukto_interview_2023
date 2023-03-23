@@ -6,7 +6,6 @@ export default function App() {
 	return (
 		<>
 			<NavBar />
-
 			<Container id="detail">
 				<Outlet />
 			</Container>
