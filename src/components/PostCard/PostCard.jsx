@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../UI/Button";
 import { Stack } from "@mui/system";
-import ReactionButton from "../UI/ReactionButton";
 import Link from "../UI/Link";
+
 export const Wrapper = styled.div`
 	background: #fff;
 	padding: 8px;
@@ -60,8 +60,7 @@ export default function PostCard({ post }) {
 				</Body>
 				<Container>
 					<hr />
-					<Stack sx={{ mt: 1 }} direction="row" alignItems="center" justifyContent="space-between">
-						<ReactionButton />
+					<Stack sx={{ mt: 1 }} direction="row" alignItems="center" justifyContent="flex-end">
 						<Link to={`/posts/${post.id}`}>
 							<Button size="small"> See More </Button>
 						</Link>

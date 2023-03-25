@@ -94,8 +94,8 @@ export default function Post() {
 				{postDetails ? (
 					<PostDetails
 						reFetch={setRefetch}
-						userId={user.id}
-						userName={user.name}
+						userId={user && user.id}
+						userName={user && user.name}
 						post={postDetails}
 					/>
 				) : (
@@ -124,13 +124,15 @@ export default function Post() {
 							postComments.map((comment, index) => {
 								return (
 									<div key={index}>
-										<CommentDetails
-											isOwner={user.id && user.id === postDetails.userId}
-											userId={user.id}
-											comment={comment}
-											handleUpdate={handleUpdateComment}
-											handleDelete={handleDeleteComment}
-										/>
+										{postDetails && (
+											<CommentDetails
+												isOwner={user.id && user.id === postDetails.userId}
+												userId={user.id}
+												comment={comment}
+												handleUpdate={handleUpdateComment}
+												handleDelete={handleDeleteComment}
+											/>
+										)}
 									</div>
 								);
 							})

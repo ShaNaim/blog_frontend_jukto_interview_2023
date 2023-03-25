@@ -7,6 +7,7 @@ import PostUpdate from "./PostUpdate";
 import { useNavigate } from "react-router-dom";
 import { deletePost } from "../api/posts.api";
 import AlertDialog from "./AlertDialog";
+
 const CustomBody = styled(Body)`
 	min-height: auto;
 	max-height: 100%;
@@ -15,9 +16,14 @@ const CustomBody = styled(Body)`
 `;
 
 const EditButtonContainer = styled.div`
-	background-color: ${(props) => props.theme.color.surface.prompt};
+	background-color: ${(props) => props.theme.color.surface.primary};
 	border-radius: 12px;
 	margin: 4px;
+	padding: 8px;
+`;
+
+const TextButtonWithMargin = styled(TextButton)`
+	margin-right: 4px;
 `;
 
 export default function PostDetails({ post, userId, userName, reFetch }) {
@@ -94,9 +100,9 @@ export default function PostDetails({ post, userId, userName, reFetch }) {
 const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick, handleDelete }) => {
 	return (
 		<Stack direction="row" justifyContent="flex-end">
-			<EditButtonContainer>
-				{userId === ownerId ? (
-					<>
+			{userId === ownerId ? (
+				<>
+					<EditButtonContainer>
 						{isEdit ? (
 							<>
 								<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
@@ -105,17 +111,17 @@ const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick, hand
 							</>
 						) : (
 							<>
-								<TextButton onClick={handleEditClick}>Edit</TextButton>
+								<TextButtonWithMargin onClick={handleEditClick}>Edit</TextButtonWithMargin>
 								<TextButton onClick={handleDelete} isDanger={true}>
 									Delete
 								</TextButton>
 							</>
 						)}
-					</>
-				) : (
-					<></>
-				)}
-			</EditButtonContainer>
+					</EditButtonContainer>
+				</>
+			) : (
+				<></>
+			)}
 		</Stack>
 	);
 };

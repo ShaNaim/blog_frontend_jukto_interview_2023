@@ -7,7 +7,7 @@ const theme = {
 			prompt: "#bdb3b3ae",
 		},
 		main: "#3194e0",
-		secondary: "#74b9ff",
+		secondary: "#74baff8b",
 		warning: "#fdcb6e",
 		error: "#d63031",
 		button: {

@@ -2,7 +2,7 @@ import React from "react";
 import Input from "../UI/Input";
 import { Wrapper } from "./CommentDetails";
 import styled from "styled-components";
-import { Stack, Paper } from "@mui/material";
+import { Stack, Paper, Box } from "@mui/material";
 import { TextButton } from "../UI/Button";
 import { Heading } from "../PostCard/PostCard";
 
@@ -18,7 +18,7 @@ export default function CreateComment({ handleSubmit, userName = "" }) {
 	}
 	return (
 		<Paper sx={{ mb: 2, borderRadius: 2 }} elevation={4}>
-			<Wrapper>
+			<Wrapper isUser={true}>
 				<Heading>{userName}</Heading>
 				<Stack direction="row" justifyContent="space-between">
 					<TextField
@@ -26,7 +26,9 @@ export default function CreateComment({ handleSubmit, userName = "" }) {
 						onChange={(event) => setValue(event.target.value)}
 						label="comment"
 					/>
-					<TextButton onClick={handleClick}>Send</TextButton>
+					<Box>
+						<TextButton onClick={handleClick}>Send</TextButton>
+					</Box>
 				</Stack>
 			</Wrapper>
 		</Paper>

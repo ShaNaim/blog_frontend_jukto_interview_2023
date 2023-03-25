@@ -12,7 +12,9 @@ export const Wrapper = styled.div`
 	border-radius: 8px;
 	margin-bottom: 24px;
 	box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.4);
-	border-left: 4px solid tomato;
+	border-left: 4px solid
+		${(props) =>
+			props.isUser ? props.theme.color.text.secondary : props.theme.color.button.secondary};
 `;
 
 const Hr = styled.hr`
@@ -45,38 +47,42 @@ export default function CommentDetails({ comment, isOwner, userId, handleUpdate,
 		<>
 			{userInfo && (
 				<>
-					<Wrapper>
-						<Heading> {userInfo.name} </Heading>
-						{!isEdit && <TextContainer> {comment.body} </TextContainer>}
-						<Stack direction="row" justifyContent="flex-end">
-							{userId === comment.postedBy ? (
-								<>
-									{isEdit && (
-										<TextField
-											value={editValue}
-											onChange={(event) => setEditValue(event.target.value)}
-											label="comment"
-										/>
-									)}
-									{isEdit ? (
-										<TextButton onClick={handleClick}>Save</TextButton>
-									) : (
-										<TextButton onClick={handleEditClick}>Edit</TextButton>
-									)}
-								</>
-							) : (
-								<></>
-							)}
-							{(isOwner || userId === comment.postedBy) &&
-								(!isEdit ? (
-									<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
-										Delete
-									</TextButton>
+					<Wrapper isUser={userId === comment.postedBy}>
+						<Stack direction="row" justifyContent="space-between" alignItems="center">
+							<div>
+								<Heading> {userInfo.name} </Heading>
+								{!isEdit && <TextContainer> {comment.body} </TextContainer>}
+							</div>
+							<Stack direction="row" justifyContent="flex-end">
+								{userId === comment.postedBy ? (
+									<>
+										{isEdit && (
+											<TextField
+												value={editValue}
+												onChange={(event) => setEditValue(event.target.value)}
+												label="comment"
+											/>
+										)}
+										{isEdit ? (
+											<TextButton onClick={handleClick}>Save</TextButton>
+										) : (
+											<TextButton onClick={handleEditClick}>Edit</TextButton>
+										)}
+									</>
 								) : (
-									<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
-										Cancel
-									</TextButton>
-								))}
+									<></>
+								)}
+								{(isOwner || userId === comment.postedBy) &&
+									(!isEdit ? (
+										<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
+											Delete
+										</TextButton>
+									) : (
+										<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
+											Cancel
+										</TextButton>
+									))}
+							</Stack>
 						</Stack>
 						<Hr />
 					</Wrapper>

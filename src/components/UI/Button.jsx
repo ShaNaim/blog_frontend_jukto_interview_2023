@@ -53,9 +53,9 @@ const TextButtonStyle = styled.button`
 	color: ${(props) =>
 		props.isDanger ? props.theme.color.button.error : props.theme.color.button.success};
 	padding: 8px;
-	margin: 8px;
 	border-radius: 8px;
 	transition: background-color 1s, color 0.8s;
+	border: 4px solid ${(props) => props.theme.color.secondary};
 	cursor: pointer;
 	&:hover {
 		background-color: ${(props) => props.theme.color.main};

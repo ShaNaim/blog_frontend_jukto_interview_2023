@@ -62,22 +62,28 @@ export default function Dashboard() {
 					<WelcomeHeading name={user.name} />
 				</Paper>
 				<Paper elevation={8} sx={{ px: { xs: 1, md: 4, lg: 8 }, py: { xs: 1, md: 2 } }}>
-					<Stack direction="row" justifyContent="space-between" spacing={3}>
+					<Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={3}>
 						<Box>
-							<Chip
-								color={isPostView ? "success" : "primary"}
-								label="Posted by User"
-								variant={isPostView ? "filled" : "outlined"}
-								onClick={() => setIsPostView(true)}
-							/>
+							<Stack
+								direction={{ xs: "column", md: "row" }}
+								justifyContent="space-between"
+								spacing={{ xs: 2, md: 0 }}
+							>
+								<Chip
+									color={isPostView ? "success" : "primary"}
+									label="Posted by User"
+									variant={isPostView ? "filled" : "outlined"}
+									onClick={() => setIsPostView(true)}
+								/>
 
-							<Chip
-								sx={{ ml: 3 }}
-								color={!isPostView ? "success" : "primary"}
-								label="Commented on by User"
-								variant={!isPostView ? "filled" : "outlined"}
-								onClick={() => setIsPostView(false)}
-							/>
+								<Chip
+									sx={{ ml: 3 }}
+									color={!isPostView ? "success" : "primary"}
+									label="Commented on by User"
+									variant={!isPostView ? "filled" : "outlined"}
+									onClick={() => setIsPostView(false)}
+								/>
+							</Stack>
 						</Box>
 						<Link to="/posts/create">
 							<Button> Create Post </Button>
