@@ -4,7 +4,6 @@ import api_url from "./url";
 export async function getAllPosts() {
 	try {
 		const result = await fetchData(`${api_url}/posts`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -15,7 +14,6 @@ export async function getAllPosts() {
 export async function getPostsByPage(pageNumber, limit = 9) {
 	try {
 		const result = await fetchData(`${api_url}/posts?_page=${pageNumber}&_limit=${limit}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -26,7 +24,6 @@ export async function getPostsByPage(pageNumber, limit = 9) {
 export async function getPostById(id) {
 	try {
 		const result = await fetchData(`${api_url}/posts/${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -37,7 +34,6 @@ export async function getPostById(id) {
 export async function getPostsByUserId(id) {
 	try {
 		const result = await fetchData(`${api_url}/posts?userId=${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -58,7 +54,6 @@ export async function createPost(data) {
 export async function updatePost(data, id) {
 	try {
 		const result = await updateData(`${api_url}/posts/${id}`, data);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -69,7 +64,6 @@ export async function updatePost(data, id) {
 export async function deletePost(id) {
 	try {
 		const result = await deleteData(`${api_url}/posts/${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });

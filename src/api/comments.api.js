@@ -4,7 +4,6 @@ import api_url from "./url";
 export async function getCommentsByUserId(id) {
 	try {
 		const result = await fetchData(`${api_url}/comments?postedBy=${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -15,7 +14,6 @@ export async function getCommentsByUserId(id) {
 export async function getCommentsByPostId(id) {
 	try {
 		const result = await fetchData(`${api_url}/comments?postId=${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -26,7 +24,6 @@ export async function getCommentsByPostId(id) {
 export async function getAllComents() {
 	try {
 		const result = await fetchData(`${api_url}/comments`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -37,7 +34,6 @@ export async function getAllComents() {
 export async function createComment(data) {
 	try {
 		const result = await createData(`${api_url}/comments`, data);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -47,7 +43,6 @@ export async function createComment(data) {
 export async function updateComment(data, id) {
 	try {
 		const result = await updateData(`${api_url}/comments/${id}`, data);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
@@ -57,7 +52,6 @@ export async function updateComment(data, id) {
 export async function deleteComment(id) {
 	try {
 		const result = await deleteData(`${api_url}/comments/${id}`);
-		console.log({ result });
 		return result;
 	} catch (error) {
 		console.error({ error });
