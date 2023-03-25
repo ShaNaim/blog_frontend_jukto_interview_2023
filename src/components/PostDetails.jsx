@@ -4,9 +4,14 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { TextButton } from "./UI/Button";
 import PostUpdate from "./PostUpdate";
+import { useNavigate } from "react-router-dom";
+import { deletePost } from "../api/posts.api";
+import AlertDialog from "./AlertDialog";
 const CustomBody = styled(Body)`
 	min-height: auto;
-	max-height: auto;
+	max-height: 100%;
+	padding: 12px;
+	line-height: 26pt;
 `;
 
 const EditButtonContainer = styled.div`
@@ -14,15 +19,22 @@ const EditButtonContainer = styled.div`
 	border-radius: 12px;
 	margin: 4px;
 `;
-export default function PostDetails({ post, userId }) {
-	const [isEdit, setIsEdit] = useState(false);
-	const [editValue, setEditValue] = useState(false);
 
+export default function PostDetails({ post, userId, userName, reFetch }) {
+	const [isEdit, setIsEdit] = useState(false);
+	const [deleteAlert, setDeleteAlert] = useState(false);
+	const router = useNavigate();
 	function handleEditClick() {
 		setIsEdit(true);
 	}
+
+	async function handleDelete() {
+		await deletePost(post.id);
+		router("/");
+	}
+
 	function handleClick() {
-		setIsEdit(false);
+		setDeleteAlert(true);
 	}
 
 	return (
@@ -34,11 +46,14 @@ export default function PostDetails({ post, userId }) {
 						ownerId={post.userId}
 						isEdit={isEdit}
 						setIsEdit={setIsEdit}
-						handleEditClick={handleEditClick}
-						handleClick={handleClick}
 					/>
 					<Wrapper>
-						<PostUpdate post={post} setEdit={setIsEdit} />
+						<PostUpdate
+							reFetch={reFetch}
+							user={{ id: userId, name: userName }}
+							post={post}
+							setEdit={setIsEdit}
+						/>
 					</Wrapper>
 				</>
 			) : (
@@ -56,6 +71,7 @@ export default function PostDetails({ post, userId }) {
 									isEdit={isEdit}
 									setIsEdit={setIsEdit}
 									handleEditClick={handleEditClick}
+									handleDelete={handleClick}
 								/>
 							</Stack>
 
@@ -70,12 +86,12 @@ export default function PostDetails({ post, userId }) {
 					</Stack>
 				</Wrapper>
 			)}
+			<AlertDialog handleSubmit={handleDelete} open={deleteAlert} setOpen={setDeleteAlert} />
 		</>
 	);
 }
 
-const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick }) => {
-	console.log({ userId, ownerId, isEdit });
+const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick, handleDelete }) => {
 	return (
 		<Stack direction="row" justifyContent="flex-end">
 			<EditButtonContainer>
@@ -90,7 +106,9 @@ const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick }) =>
 						) : (
 							<>
 								<TextButton onClick={handleEditClick}>Edit</TextButton>
-								<TextButton isDanger={true}>Delete</TextButton>
+								<TextButton onClick={handleDelete} isDanger={true}>
+									Delete
+								</TextButton>
 							</>
 						)}
 					</>

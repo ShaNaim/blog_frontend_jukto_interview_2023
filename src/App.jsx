@@ -6,7 +6,7 @@ export default function App() {
 	return (
 		<>
 			<NavBar />
-			<Container id="detail">
+			<Container sx={{ mb: 12 }} id="detail">
 				<Outlet />
 			</Container>
 		</>

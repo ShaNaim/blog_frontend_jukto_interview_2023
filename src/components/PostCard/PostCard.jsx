@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
 `;
 
 export const Heading = styled.div`
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: 600;
 `;
 
 export const Title = styled.div`
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 4px;
 `;

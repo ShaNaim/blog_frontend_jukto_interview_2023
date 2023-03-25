@@ -1,4 +1,4 @@
-import fetchData, { createData } from "./fetch.api";
+import fetchData, { createData, updateData, deleteData } from "./fetch.api";
 import api_url from "./url";
 
 export async function getAllPosts() {
@@ -51,6 +51,28 @@ export async function createPost(data) {
 		return result;
 	} catch (error) {
 		console.error(error);
+		throw error;
+	}
+}
+
+export async function updatePost(data, id) {
+	try {
+		const result = await updateData(`${api_url}/posts/${id}`, data);
+		console.log({ result });
+		return result;
+	} catch (error) {
+		console.error({ error });
+		throw error;
+	}
+}
+
+export async function deletePost(id) {
+	try {
+		const result = await deleteData(`${api_url}/posts/${id}`);
+		console.log({ result });
+		return result;
+	} catch (error) {
+		console.error({ error });
 		throw error;
 	}
 }

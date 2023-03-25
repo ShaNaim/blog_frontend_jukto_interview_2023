@@ -24,6 +24,7 @@ export default function Post() {
 	const [loading, setLoading] = useState(true);
 	const [postDetails, setPostDetails] = useState(null);
 	const [postComments, setPostComments] = useState([]);
+	const [refetch, setRefetch] = useState(false);
 
 	async function getPostData(id) {
 		const postData = await getPostById(id);
@@ -81,7 +82,7 @@ export default function Post() {
 	useEffect(() => {
 		getPostData(postId);
 		getPostComments(postId);
-	}, [postId]);
+	}, [postId, refetch]);
 
 	useEffect(() => {
 		currentUser.email && setUser(currentUser);
@@ -90,7 +91,16 @@ export default function Post() {
 	return (
 		<Box sx={{ mt: 2 }}>
 			<Box sx={{ mb: 4 }}>
-				{postDetails ? <PostDetails userId={user.id} post={postDetails} /> : <PostCardSkeleton />}
+				{postDetails ? (
+					<PostDetails
+						reFetch={setRefetch}
+						userId={user.id}
+						userName={user.name}
+						post={postDetails}
+					/>
+				) : (
+					<PostCardSkeleton />
+				)}
 			</Box>
 			<Stack sx={{ mb: 1 }} direction="row" justifyContent="space-between" alignItems="flex-end">
 				Comments | {postComments.length}

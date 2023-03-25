@@ -15,10 +15,13 @@ const SubmitButton = styled(Button)`
 `;
 
 export default function PostForm({ handleSubmit, updateData }) {
-	console.log({ updateData });
-	const [title, setTitle] = useState(updateData ? updateData.title : "");
-	const [description, setDescription] = useState(updateData ? updateData.body : "");
-	const [feeling, setFeeling] = useState(updateData ? updateData.feeling : "");
+	const [title, setTitle] = useState(updateData && updateData.title ? updateData.title : "");
+	const [description, setDescription] = useState(
+		updateData && updateData.body ? updateData.body : ""
+	);
+	const [feeling, setFeeling] = useState(
+		updateData && updateData.feeling ? updateData.feeling : ""
+	);
 	const [alertMessage, setAlertMessage] = useState("");
 
 	const [titleError, setTitleError] = useState(false);
@@ -60,7 +63,7 @@ export default function PostForm({ handleSubmit, updateData }) {
 	return (
 		<>
 			<Stack spacing={2}>
-				<Heading> Create Post </Heading>
+				<Heading> {updateData ? "Update" : "Create"} Post </Heading>
 				<Input
 					error={titleError}
 					id="filled-basic"
@@ -84,8 +87,8 @@ export default function PostForm({ handleSubmit, updateData }) {
 					id="filled-basic"
 					label="Description"
 					multiline
-					rows={4}
 					variant="outlined"
+					row={4}
 					value={description}
 					onChange={(event) => {
 						setDescription(event.target.value);

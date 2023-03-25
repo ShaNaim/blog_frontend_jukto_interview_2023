@@ -2,21 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const CustomButton = styled.button`
-	background-color: ${(props) => props.theme.color.surface.main};
-	color: ${(props) => props.theme.color.button.success};
 	padding: 8px;
 	border-radius: 8px;
-	border: 3px solid ${(props) => props.theme.color.button.success};
 	font-size: 14px;
 	font-weight: 600;
 	cursor: pointer;
 	box-shadow: 0 6px #99999983;
 	transition: border 1s, color 1s, background-color 0.6s;
 	margin-bottom: 4px;
-	&:hover {
-		color: ${(props) => props.theme.color.surface.main};
-		background-color: ${(props) => props.theme.color.button.success};
-	}
 
 	&:active {
 		box-shadow: 0 2px #666666a4;
@@ -24,7 +17,35 @@ const CustomButton = styled.button`
 	}
 `;
 
-const SuccessButton = styled(CustomButton)``;
+const SuccessButton = styled(CustomButton)`
+	background-color: ${(props) => props.theme.color.surface.main};
+	color: ${(props) => props.theme.color.button.success};
+	border: 3px solid ${(props) => props.theme.color.button.success};
+	&:hover {
+		color: ${(props) => props.theme.color.surface.main};
+		background-color: ${(props) => props.theme.color.button.success};
+	}
+`;
+
+const UpdateButton = styled(CustomButton)`
+	background-color: ${(props) => props.theme.color.surface.main};
+	color: ${(props) => props.theme.color.button.update};
+	border: 3px solid ${(props) => props.theme.color.button.update};
+	&:hover {
+		color: ${(props) => props.theme.color.surface.main};
+		background-color: ${(props) => props.theme.color.button.update};
+	}
+`;
+
+const DangerButton = styled(CustomButton)`
+	background-color: ${(props) => props.theme.color.surface.main};
+	color: ${(props) => props.theme.color.button.error};
+	border: 3px solid ${(props) => props.theme.color.button.error};
+	&:hover {
+		color: ${(props) => props.theme.color.surface.main};
+		background-color: ${(props) => props.theme.color.button.error};
+	}
+`;
 
 const TextButtonStyle = styled.button`
 	border: none;
@@ -43,7 +64,13 @@ const TextButtonStyle = styled.button`
 `;
 
 export default function Button(props) {
-	return <CustomButton {...props}>{props.children}</CustomButton>;
+	if (props.isUpdate) {
+		return <UpdateButton {...props}>{props.children}</UpdateButton>;
+	}
+	if (props.isDanger) {
+		return <DangerButton {...props}>{props.children}</DangerButton>;
+	}
+	return <SuccessButton {...props}>{props.children}</SuccessButton>;
 }
 
 export function TextButton(props) {
