@@ -9,12 +9,12 @@ import Link from "../components/UI/Link";
 import FullBleed from "../components/UI/FullBleed";
 import { useDispatch, useSelector } from "react-redux";
 import { setPostState } from "../redux/post.slice";
+
 export default function Home() {
 	const [posts, setPosts] = useState([]);
 	const dispatch = useDispatch();
 	async function getData() {
 		const result = await getAllPosts();
-		console.log({ data: result });
 		setPosts(result);
 		dispatch(setPostState(result));
 	}
@@ -34,8 +34,8 @@ export default function Home() {
 				mb: 5,
 			}}
 		>
-			<Stack spacing={4}>
-				<Box sx={{ minHeight: "400px" }}>
+			<Stack spacing={1}>
+				<Box sx={{ minHeight: "410px" }}>
 					<Heading> Trending Posts </Heading>
 					<PostHeroSection postsList={posts} />
 				</Box>

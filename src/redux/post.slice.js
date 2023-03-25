@@ -9,6 +9,9 @@ export const postSlice = createSlice({
 		setPostState: (state, action) => {
 			state.data = action.payload;
 		},
+		addPostToState: (state, action) => {
+			state.data = [...state.data, action.payload];
+		},
 
 		deletePostState: (state, action) => {
 			state.data = [];
@@ -16,6 +19,6 @@ export const postSlice = createSlice({
 	},
 });
 
-export const { setPostState, deletePostState } = postSlice.actions;
+export const { setPostState, deletePostState, addPostToState } = postSlice.actions;
 
 export default postSlice.reducer;

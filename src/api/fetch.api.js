@@ -28,7 +28,42 @@ export async function createData(url, body) {
 	} catch (error) {
 		console.error(error, { error });
 		throw handleError(error.status ?? error.status);
-		throw "Something Went wrong , Please try again later";
+	}
+}
+export async function updateData(url, body) {
+	try {
+		const response = await fetch(url, {
+			method: "PUT",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8",
+			},
+		});
+		if (response.ok) {
+			return await response.json();
+		}
+		throw response;
+	} catch (error) {
+		console.error(error, { error });
+		throw handleError(error.status ?? error.status);
+	}
+}
+
+export async function deleteData(url) {
+	try {
+		const response = await fetch(url, {
+			method: "DELETE",
+			headers: {
+				"Content-type": "application/json; charset=UTF-8",
+			},
+		});
+		if (response.ok) {
+			return await response.json();
+		}
+		throw response;
+	} catch (error) {
+		console.error(error, { error });
+		throw handleError(error.status ?? error.status);
 	}
 }
 export default fetchData;
@@ -38,4 +73,5 @@ function handleError(status) {
 	if (status === 404)
 		throw "Resources not found,No resources was found with the provided information";
 	if (status >= 500) throw "Something Went wrong , Please try again later";
+	throw "Something Went wrong , Please try again later";
 }

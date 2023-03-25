@@ -9,12 +9,14 @@ export const userSlice = createSlice({
 		setUserState: (state, action) => {
 			state.data = action.payload;
 		},
-        
+
 		deleteUserState: (state, action) => {
 			state.data = {};
 		},
 	},
 });
+
+// export
 
 export const { setUserState, deleteUserState } = userSlice.actions;
 

@@ -1,4 +1,4 @@
-import fetchData from "./fetch.api";
+import fetchData, { createData } from "./fetch.api";
 import api_url from "./url";
 
 export async function getAllPosts() {
@@ -41,6 +41,16 @@ export async function getPostsByUserId(id) {
 		return result;
 	} catch (error) {
 		console.error({ error });
+		throw error;
+	}
+}
+
+export async function createPost(data) {
+	try {
+		const result = await createData(`${api_url}/posts`, data);
+		return result;
+	} catch (error) {
+		console.error(error);
 		throw error;
 	}
 }

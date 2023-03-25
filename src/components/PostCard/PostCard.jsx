@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Button from "../UI/Button";
 import { Stack } from "@mui/system";
 import ReactionButton from "../UI/ReactionButton";
-const Wrapper = styled.div`
+import Link from "../UI/Link";
+export const Wrapper = styled.div`
 	background: #fff;
 	padding: 8px;
 	border: 2px solid #776868;
@@ -11,24 +12,24 @@ const Wrapper = styled.div`
 	box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.4);
 `;
 
-const Heading = styled.div`
+export const Heading = styled.div`
 	font-size: 16px;
 	font-weight: 600;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 4px;
 `;
 
-const Footer = styled.div`
+export const Footer = styled.div`
 	font-size: 12px;
 	font-weight: 300;
 	margin-bottom: 8px;
 `;
 
-const Body = styled.div`
+export const Body = styled.div`
 	font-size: 16px;
 	font-weight: 400;
 	margin: 8px 0;
@@ -37,7 +38,7 @@ const Body = styled.div`
 	overflow: hidden;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
 	width: 100%;
 `;
 
@@ -47,7 +48,7 @@ export default function PostCard({ post }) {
 			<Stack alignItems="flex-start" justifyContent="space-between">
 				<Container>
 					<Heading>{post.userName ? post.userName : "John Doe"}</Heading>
-					<Footer>{post.feeling ? post.feeling : "feeling Happy"}</Footer>
+					<Footer>Feeling {post.feeling ? post.feeling : "Happy"}</Footer>
 					<hr />
 				</Container>
 
@@ -61,7 +62,9 @@ export default function PostCard({ post }) {
 					<hr />
 					<Stack sx={{ mt: 1 }} direction="row" alignItems="center" justifyContent="space-between">
 						<ReactionButton />
-						<Button size="small"> See More </Button>
+						<Link to={`/posts/${post.id}`}>
+							<Button size="small"> See More </Button>
+						</Link>
 					</Stack>
 				</Container>
 			</Stack>

@@ -21,7 +21,7 @@ export default function PostHeroSection({ postsList }) {
 	}, [postsList]);
 
 	useEffect(() => {
-		const interval = setInterval(getRandomPost, 5000); // 30 seconds in millisecond
+		const interval = setInterval(getRandomPost, 30000); // 30 seconds in millisecond
 		return () => {
 			clearInterval(interval);
 		};

@@ -6,12 +6,9 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-// import { useDispatch } from "react-redux";
-// import { selectAuthState } from "@/store/authSlice";
-// import { useSelector } from "react-redux";
-// import { setAuthState } from "@/store/authSlice";
-// import { handleUserLogout } from "@/api/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deleteUserState } from "../../redux/user.slice";
 
 function stringToColor(string) {
 	let hash = 0;
@@ -40,11 +37,10 @@ function stringAvatar(name) {
 	};
 }
 
-export default function Profile({ settings }) {
+export default function Profile({ user }) {
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
-	// const authState = useSelector(selectAuthState);
+	const dispatch = useDispatch();
 	const router = useNavigate();
-	// const dispatch = useDispatch();
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
 	};
@@ -57,24 +53,18 @@ export default function Profile({ settings }) {
 		router("/dashboard");
 	};
 
-	// const handleLogout = async () => {
-	// 	console.log("out");
-	// 	await handleUserLogout(authState.accessToken);
-	// 	dispatch(
-	// 		setAuthState({
-	// 			isLogedUser: false,
-	// 			accessToken: null,
-	// 			user: null,
-	// 		})
-	// 	);
-	// 	router("/login");
-	// };
+	const handleLogout = async () => {
+		console.log("logout");
+		setAnchorElUser(null);
+		dispatch(deleteUserState());
+		router("/login");
+	};
 
 	return (
 		<Box sx={{ flexGrow: 0 }}>
 			<Tooltip title="Open settings">
 				<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-					<Avatar {...stringAvatar(authState.user.name || "U N")} />
+					<Avatar {...stringAvatar(user.name || "U N")} />
 				</IconButton>
 			</Tooltip>
 			<Menu
@@ -96,7 +86,7 @@ export default function Profile({ settings }) {
 				<MenuItem onClick={handleNav}>
 					<Typography textAlign="center"> Dashboard </Typography>
 				</MenuItem>
-				<MenuItem>
+				<MenuItem onClick={handleLogout}>
 					<Typography textAlign="center"> Logout </Typography>
 				</MenuItem>
 			</Menu>

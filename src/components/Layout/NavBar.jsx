@@ -6,9 +6,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "../UI/Link";
 import { useTheme } from "styled-components";
-
+import { useSelector } from "react-redux";
+import Profile from "./Profile";
 export default function NavBar() {
+	const user = useSelector((state) => state.user.data);
+	const [hasUser, sethasUser] = React.useState(false);
 	const theme = useTheme();
+	React.useEffect(() => {
+		if (user.email) {
+			sethasUser(true);
+		} else {
+			sethasUser(false);
+		}
+	}, [user]);
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar sx={{ background: theme.color.main }} position="static">
@@ -16,9 +26,13 @@ export default function NavBar() {
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						<Link to="/">{import.meta.env.VITE_APP_NAME}</Link>
 					</Typography>
-					<Button color="inherit">
-						<Link to="/login">Login</Link>
-					</Button>
+					{!hasUser ? (
+						<Link to="/login">
+							<Button color="inherit">Login</Button>
+						</Link>
+					) : (
+						<Profile user={user} />
+					)}
 				</Toolbar>
 			</AppBar>
 		</Box>

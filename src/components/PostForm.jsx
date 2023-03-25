@@ -14,10 +14,11 @@ const SubmitButton = styled(Button)`
 	height: 40px;
 `;
 
-export default function PostForm({ handleSubmit }) {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [feeling, setFeeling] = useState("");
+export default function PostForm({ handleSubmit, updateData }) {
+	console.log({ updateData });
+	const [title, setTitle] = useState(updateData ? updateData.title : "");
+	const [description, setDescription] = useState(updateData ? updateData.body : "");
+	const [feeling, setFeeling] = useState(updateData ? updateData.feeling : "");
 	const [alertMessage, setAlertMessage] = useState("");
 
 	const [titleError, setTitleError] = useState(false);
@@ -41,17 +42,19 @@ export default function PostForm({ handleSubmit }) {
 	}
 
 	async function handleClick() {
-		handleSubmit();
-		// const validated = validatePostData(title, feeling, description);
-		// if (!validated.success) {
-		// 	if (validated.origin === "title") setTitleError(true);
-		// 	if (validated.origin === "feeling") setFeelingError(true);
-		// 	if (validated.origin === "desc") setDescriptionError(true);
-		// 	setAlertMessage(validated.message);
-		// 	setAlert(true);
-		// } else {
-		// 	handleSubmit();
-		// }
+		const validated = validatePostData(title, feeling, description);
+		if (!validated.success) {
+			if (validated.origin === "title") setTitleError(true);
+			if (validated.origin === "feeling") setFeelingError(true);
+			if (validated.origin === "desc") setDescriptionError(true);
+			setAlertMessage(validated.message);
+			setAlert(true);
+		} else {
+			handleSubmit({ title, feeling, description });
+			setTitle("");
+			setDescription("");
+			setFeeling("");
+		}
 	}
 
 	return (
@@ -68,6 +71,15 @@ export default function PostForm({ handleSubmit }) {
 					helperText={`Max ${MAX_TITLE} char`}
 				/>
 				<Input
+					error={feelingError}
+					id="filled-basic"
+					label="Feeling"
+					sx={{ width: { xs: "100%", sm: "40%", md: "30%", lg: "20%" } }}
+					value={feeling}
+					onChange={handleSetFeeling}
+					helperText={`Max ${MAX_FEELING} char`}
+				/>
+				<Input
 					error={descriptionError}
 					id="filled-basic"
 					label="Description"
@@ -80,19 +92,11 @@ export default function PostForm({ handleSubmit }) {
 					}}
 					onClick={(e) => setDescriptionError(false)}
 				/>
-
-				<Input
-					error={feelingError}
-					id="filled-basic"
-					label="Feeling"
-					sx={{ width: { xs: "100%", sm: "40%", md: "30%", lg: "20%" } }}
-					value={feeling}
-					onChange={handleSetFeeling}
-					helperText={`Max ${MAX_FEELING} char`}
-				/>
 			</Stack>
-			<Stack sx={{ width: "100%" }} justifyContent="flex-end" alignItems="flex-end">
-				<SubmitButton onClick={handleClick}>Create</SubmitButton>
+			<Stack sx={{ width: "100%", mt: 1 }} justifyContent="flex-end" alignItems="flex-end">
+				<SubmitButton isUpdate={updateData} onClick={handleClick}>
+					{updateData ? "Update" : "Create"}
+				</SubmitButton>
 			</Stack>
 			<NotifyAlert open={alert} setOpen={setAlert} type="error" message={alertMessage} />
 		</>
