@@ -11,7 +11,7 @@ const CustomButton = styled.button`
 	font-weight: 600;
 	cursor: pointer;
 	box-shadow: 0 6px #99999983;
-	transition: color 1s, background-color 0.6s;
+	transition: border 1s, color 1s, background-color 0.6s;
 	margin-bottom: 4px;
 	&:hover {
 		color: ${(props) => props.theme.color.surface.main};
@@ -24,6 +24,29 @@ const CustomButton = styled.button`
 	}
 `;
 
+const SuccessButton = styled(CustomButton)``;
+
+const TextButtonStyle = styled.button`
+	border: none;
+	background-color: ${(props) => props.theme.color.surface.main};
+	color: ${(props) =>
+		props.isDanger ? props.theme.color.button.error : props.theme.color.button.success};
+	padding: 8px;
+	margin: 8px;
+	border-radius: 8px;
+	transition: background-color 1s, color 0.8s;
+	cursor: pointer;
+	&:hover {
+		background-color: ${(props) => props.theme.color.main};
+		color: ${(props) => props.theme.color.surface.main};
+	}
+`;
+
 export default function Button(props) {
 	return <CustomButton {...props}>{props.children}</CustomButton>;
 }
+
+export function TextButton(props) {
+	return <TextButtonStyle {...props}>{props.children}</TextButtonStyle>;
+}
+// ${(props) => (props.isUpdate ? "border: 4px solid red" : "")};
