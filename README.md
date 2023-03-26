@@ -6,7 +6,7 @@ This is my code submission for **Junior react developer**  at Jukto Digital
 
 > ***master branch***
 To run the program offline , Master branch is preferred. It uses 'My JSON Server' as a mock server for api calls. A db.json file is included with some dummy data. 
-n.b. Please run the json-server before using the program , otherwise program won't work properly.
+n.b. Please run the json-server before using the program , otherwise program won't work properly. An env file is to be added to the project that shall hold the url of the json-server.
 
 > ***blog-json-placeholder***
 > To deploy on github-pages blog-json-placeholder is preferred . It uses JSONPlaceholder as a mock server. It initially fetches all required data (posts , comments , users) from JSONPlaceholder and the rest data manipulation is done with Redux on the frontend.
