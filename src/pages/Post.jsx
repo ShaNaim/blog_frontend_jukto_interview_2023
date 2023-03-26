@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { getPostById } from "../api/posts.api";
-import {
-	getCommentsByPostId,
-	createComment,
-	// updateComment,
-	deleteComment,
-} from "../api/comments.api";
 import { Box, Stack, Paper } from "@mui/material";
 import PostCardSkeleton from "../components/PostCard/PostCardSkeleton";
 import PostDetails from "../components/PostDetails";

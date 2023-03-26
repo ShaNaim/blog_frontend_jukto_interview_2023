@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Wrapper, Heading, Title, Footer, Body, Container } from "./PostCard/PostCard";
+import { Wrapper, Title, Body, Container } from "./PostCard/PostCard";
 import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { TextButton } from "./UI/Button";
 import PostUpdate from "./PostUpdate";
 import { useNavigate } from "react-router-dom";
-// import { deletePost } from "../api/posts.api";
 import AlertDialog from "./AlertDialog";
 import PostHeader from "./PostCard/PostHeader";
 import usePostHandler from "../hooks/posts.hook";

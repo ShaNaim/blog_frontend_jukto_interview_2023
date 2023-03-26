@@ -1,13 +1,15 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { useTheme } from "styled-components";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "../UI/Link";
-import { useTheme } from "styled-components";
-import { useSelector } from "react-redux";
 import Profile from "./Profile";
+
 export default function NavBar() {
 	const user = useSelector((state) => state.user.data);
 	const [hasUser, sethasUser] = React.useState(false);

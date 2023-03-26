@@ -1,13 +1,13 @@
+import React from "react";
 import { ValidateEmail } from "../../utils/validation.util";
+import useAuthHandler from "../../hooks/auth.hook";
+//
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import React from "react";
 import NotifyAlert from "../UI/NotifyAlert";
 import FunctionButton from "./FunctionButton";
 import { boxSxObject, inputSxObject } from "./styles";
-import { checkEmailExists } from "../../api/auth.api";
-import useAuthHandler from "../../hooks/auth.hook";
 export default function EmailInput({ handleClick, isLogin, emailValue, nameValue, contactValue }) {
 	const [email, setEmail] = React.useState(emailValue ? emailValue : "");
 	const [name, setName] = React.useState(nameValue ? nameValue : "");

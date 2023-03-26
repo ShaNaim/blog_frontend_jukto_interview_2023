@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import WelcomeHeading from "../components/WelcomeHeading";
-import PostForm from "../components/PostForm";
-import { getUserByEmail } from "../api/users.api";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../api/posts.api";
 import { setPostState } from "../redux/post.slice";
 import PaginationList from "../components/PaginationList";
-import { postsUserHaveComentedOn } from "../api/comments.api";
 import Button from "../components/UI/Button";
 import Chip from "@mui/material/Chip";
 import Link from "../components/UI/Link";
 import useCommentsHandler from "../hooks/comments.hook";
 import { selectPostsState } from "../redux/post.slice";
 import { selectUsersState } from "../redux/auth.slice";
+
 export default function Dashboard() {
 	const user = useSelector(selectUsersState);
 	const posts = useSelector(selectPostsState);

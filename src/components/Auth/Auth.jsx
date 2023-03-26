@@ -1,21 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import useAuthHandler from "../../hooks/auth.hook";
 
+// Components
 import Box from "@mui/material/Box";
-
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
-import { useNavigate } from "react-router-dom";
 import NotifyAlert from "../UI/NotifyAlert";
 import Authenticate from "./Authenticate";
-import useAuthHandler from "../../hooks/auth.hook";
 export default function Auth({ login = false, isPage = false }) {
 	const router = useNavigate();
 	const [isLogin, setIsLogin] = React.useState(login);
 	const [hasError, setHasError] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState(false);
-	// const register = useRegister();
-	// const loginUser = useLogin();
 	const { loginUser, registerUser } = useAuthHandler();
 	const handleSubmit = (user) => {
 		try {

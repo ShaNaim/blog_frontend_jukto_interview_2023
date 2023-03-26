@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Box, Stack, Paper } from "@mui/material";
+import { MAX_TITLE } from "../utils/const.provider";
+
+import Stack from "@mui/material/Stack";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import styled from "styled-components";
 import Heading from "./UI/Heading";
 import NotifyAlert from "./UI/NotifyAlert";
 import { validatePostData } from "../utils/validation.util";
-
-import { MAX_TITLE } from "../utils/const.provider";
 
 const SubmitButton = styled(Button)`
 	width: 100px;

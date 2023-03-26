@@ -1,9 +1,7 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import PostList from "./PostList";
-import { getPostsByPage } from "../api/posts.api";
 import sleep from "../utils/sleep.util";
 const PAGE_SIZE = 9;
 export default function PaginationList({ listOfPosts }) {

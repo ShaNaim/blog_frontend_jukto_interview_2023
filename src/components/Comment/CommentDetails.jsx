@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getUserById } from "../../api/users.api";
+import React, { useState } from "react";
 import { Heading } from "../PostCard/PostCard";
 import styled from "styled-components";
 import Stack from "@mui/material/Stack";

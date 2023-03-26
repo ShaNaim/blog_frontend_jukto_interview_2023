@@ -1,5 +1,3 @@
-import fetchData, { createData } from "./fetch.api";
-import api_url from "./url";
 import { getUserByEmail } from "./users.api";
 
 export async function checkEmailExists(email) {

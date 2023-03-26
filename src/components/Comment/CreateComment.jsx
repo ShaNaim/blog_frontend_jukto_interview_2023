@@ -1,7 +1,8 @@
 import React from "react";
+import styled from "styled-components";
+
 import Input from "../UI/Input";
 import { Wrapper } from "./CommentDetails";
-import styled from "styled-components";
 import { Stack, Paper, Box } from "@mui/material";
 import { TextButton } from "../UI/Button";
 import { Heading } from "../PostCard/PostCard";

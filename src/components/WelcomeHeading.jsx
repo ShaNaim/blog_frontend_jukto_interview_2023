@@ -1,6 +1,7 @@
 import React from "react";
-import { Stack } from "@mui/material";
 import styled from "styled-components";
+
+import { Stack } from "@mui/material";
 import NameCard from "./UI/NameCard";
 const Wrapper = styled.div`
 	width: 100%;

@@ -8,7 +8,6 @@ function usePostHandler() {
 	const comments = useSelector(selectCommentsState);
 	const { deleteComment } = useCommentsHandler();
 	function addPost(postData) {
-		console.log({ postData });
 		dispatch(addPostToState({ ...postData, id: postsList.length + 1 }));
 		return { ...postData, id: postsList.length + 1 };
 	}

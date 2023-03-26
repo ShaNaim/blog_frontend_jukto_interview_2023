@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import { getUserById } from "../../api/users.api";
-import Skeleton from "@mui/material/Skeleton";
 import styled from "styled-components";
+import useAuthHandler from "../../hooks/auth.hook";
+
+import Skeleton from "@mui/material/Skeleton";
 import { Heading } from "./PostCard";
 import { Footer } from "./PostCard";
-import useAuthHandler from "../../hooks/auth.hook";
 export const Container = styled.div`
 	width: 100%;
 `;

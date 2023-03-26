@@ -47,7 +47,6 @@ function useCommentsHandler() {
 		const filteredList = commentsList.filter((comment) => comment.email === userEmail);
 		const postsList = filteredList.map((comment) => comment.postId);
 		const uniquePostsList = [...new Set(postsList)];
-		console.log({ uniquePostsList });
 		return uniquePostsList;
 	}
 

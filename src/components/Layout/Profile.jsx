@@ -1,4 +1,8 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deleteUserState } from "../../redux/auth.slice";
+
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -6,9 +10,6 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { deleteUserState } from "../../redux/auth.slice";
 
 function stringToColor(string) {
 	let hash = 0;

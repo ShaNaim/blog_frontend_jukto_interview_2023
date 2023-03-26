@@ -20,7 +20,6 @@ export default function Home() {
 	const postsList = useSelector(selectPostsState);
 	const commentsList = useSelector(selectCommentsState);
 	const usersList = useSelector(selectUsersListState);
-	console.log(usersList);
 	const dispatch = useDispatch();
 
 	async function getPostData() {
@@ -29,7 +28,6 @@ export default function Home() {
 		dispatch(setPostState(result));
 	}
 	async function getCommentsData() {
-		console.log("");
 		const resultComments = await getAllComents();
 		dispatch(setCommentsState(resultComments));
 	}
