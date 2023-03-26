@@ -24,7 +24,7 @@ export default function PostList({ list }) {
 							unmountOnExit
 						>
 							<Grid item xs={12} sm={4} md={4}>
-								<PostCard post={post} />
+								{post && <PostCard post={post} />}
 							</Grid>
 						</Slide>
 					))}

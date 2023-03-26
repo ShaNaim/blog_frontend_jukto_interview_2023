@@ -12,13 +12,13 @@ export const postSlice = createSlice({
 		addPostToState: (state, action) => {
 			state.data = [...state.data, action.payload];
 		},
-
 		deletePostState: (state, action) => {
 			state.data = [];
 		},
 	},
 });
 
+export const selectPostsState = (state) => state.posts.data;
 export const { setPostState, deletePostState, addPostToState } = postSlice.actions;
 
 export default postSlice.reducer;

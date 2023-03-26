@@ -1,18 +1,16 @@
 import React from "react";
 import PostForm from "./PostForm";
-import { updatePost } from "../api/posts.api";
+// import { updatePost } from "../api/posts.api";
+import usePostHandler from "../hooks/posts.hook";
 export default function PostUpdate({ post, setEdit, user, reFetch }) {
+	const { updatePost } = usePostHandler();
 	async function handleUpdate(data) {
-		const updatedPost = await updatePost(
-			{
-				title: data.title,
-				body: data.description,
-				feeling: data.feeling,
-				userId: user.id,
-				userName: user.name,
-			},
-			post.id
-		);
+		const updatedPost = await updatePost({
+			title: data.title,
+			body: data.description,
+			userId: user.id,
+			id: post.id,
+		});
 		setEdit(false);
 		reFetch((prev) => !prev);
 	}

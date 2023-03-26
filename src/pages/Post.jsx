@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getPostById } from "../api/posts.api";
+// import { getPostById } from "../api/posts.api";
 import {
 	getCommentsByPostId,
 	createComment,
-	updateComment,
+	// updateComment,
 	deleteComment,
 } from "../api/comments.api";
 import { Box, Stack, Paper } from "@mui/material";
@@ -16,15 +16,21 @@ import { useSelector } from "react-redux";
 import Skeleton from "@mui/material/Skeleton";
 import Link from "../components/UI/Link";
 import { TextButton } from "../components/UI/Button";
+
+/// New
+import usePostHandler from "../hooks/posts.hook";
+import useCommentsHandler from "../hooks/comments.hook";
 export default function Post() {
 	const { postId } = useParams();
 	const currentUser = useSelector((state) => state.user.data);
-
 	const [user, setUser] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [postDetails, setPostDetails] = useState(null);
 	const [postComments, setPostComments] = useState([]);
 	const [refetch, setRefetch] = useState(false);
+	// Hook
+	const { getPostById } = usePostHandler();
+	const { getCommentByPostId, updateComment, deleteComment, addComment } = useCommentsHandler();
 
 	async function getPostData(id) {
 		const postData = await getPostById(id);
@@ -32,14 +38,15 @@ export default function Post() {
 	}
 
 	async function getPostComments(id) {
-		const commentsData = await getCommentsByPostId(id);
+		const commentsData = await getCommentByPostId(id);
 		if (commentsData) setPostComments(commentsData);
 		setLoading(false);
 	}
+
 	async function handleCreateComment(commentBody) {
-		const newComment = await createComment({
+		const newComment = addComment({
 			postId: postDetails.id,
-			postedBy: user.id,
+			email: user.email,
 			body: commentBody,
 		});
 		if (newComment) setPostComments((prev) => [newComment, ...prev]);
@@ -58,22 +65,19 @@ export default function Post() {
 	}
 
 	async function handleUpdateComment(commentBody, id) {
-		const newComment = await updateComment(
-			{
-				postId: postDetails.id,
-				postedBy: user.id,
-				body: commentBody,
-			},
-			id
-		);
+		const newComment = updateComment({
+			postId: postDetails.id,
+			email: user.email,
+			body: commentBody,
+			id: id,
+		});
 		if (newComment) {
 			replaceComment(id, newComment);
 		}
 	}
 
-	async function handleDeleteComment(commentId) {
-		console.log(commentId);
-		const newComment = await deleteComment(commentId);
+	function handleDeleteComment(commentId) {
+		const newComment = deleteComment(commentId);
 		if (newComment) {
 			deleteCommentFromList(commentId);
 		}
@@ -85,7 +89,9 @@ export default function Post() {
 	}, [postId, refetch]);
 
 	useEffect(() => {
-		currentUser.email && setUser(currentUser);
+		if (currentUser && currentUser.email) {
+			setUser(currentUser);
+		}
 	}, [currentUser]);
 
 	return (
@@ -127,7 +133,7 @@ export default function Post() {
 										{postDetails && (
 											<CommentDetails
 												isOwner={user.id && user.id === postDetails.userId}
-												userId={user.id}
+												userEmail={user.email}
 												comment={comment}
 												handleUpdate={handleUpdateComment}
 												handleDelete={handleDeleteComment}

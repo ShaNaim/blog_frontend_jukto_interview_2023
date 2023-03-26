@@ -12,24 +12,26 @@ import { postsUserHaveComentedOn } from "../api/comments.api";
 import Button from "../components/UI/Button";
 import Chip from "@mui/material/Chip";
 import Link from "../components/UI/Link";
-
+import useCommentsHandler from "../hooks/comments.hook";
+import { selectPostsState } from "../redux/post.slice";
+import { selectUsersState } from "../redux/auth.slice";
 export default function Dashboard() {
-	const user = useSelector((state) => state.user.data);
-	const posts = useSelector((state) => state.posts.data);
+	const user = useSelector(selectUsersState);
+	const posts = useSelector(selectPostsState);
 	const [postsList, setPostsList] = useState([]);
 	const [loadingData, setLoadingData] = useState(true);
 	const [commentedPostsList, setCommentedPostsList] = useState([]);
 	const [isPostView, setIsPostView] = useState(true);
+	const { postsUserHaveCommentedOn } = useCommentsHandler();
 	const router = useNavigate();
 
 	async function getData() {
 		const result = await getAllPosts();
-
 		dispatch(setPostState(result));
 	}
 
 	async function getCommentedList() {
-		const list = await postsUserHaveComentedOn(user.id);
+		const list = postsUserHaveCommentedOn(user.email);
 		const postsListofCommets = [];
 		list.forEach((value) => {
 			const post = posts.filter((post) => post.id === value);
@@ -46,20 +48,16 @@ export default function Dashboard() {
 	}, [user]);
 
 	useEffect(() => {
-		if (posts.length === 0) {
-			getData();
-		} else {
-			const usersList = posts.filter((post) => post.userId === user.id);
-			setPostsList(usersList);
-			getCommentedList();
-		}
+		const usersList = posts.filter((post) => post.userId === user.id);
+		setPostsList(usersList);
+		getCommentedList();
 	}, [posts]);
 
 	return (
 		<Box sx={{ mt: 2 }}>
 			<Stack spacing={2}>
 				<Paper elevation={2}>
-					<WelcomeHeading name={user.name} />
+					<WelcomeHeading email={user.email} name={user.name} />
 				</Paper>
 				<Paper elevation={8} sx={{ px: { xs: 1, md: 4, lg: 8 }, py: { xs: 1, md: 2 } }}>
 					<Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={3}>

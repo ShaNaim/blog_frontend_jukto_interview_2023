@@ -11,13 +11,19 @@ const Sub = styled.span`
 	color: ${(props) => props.theme.color.text.subtitle};
 	font-size: 12px;
 `;
+const EmailSub = styled.span`
+	color: ${(props) => props.theme.color.text.subtitle};
+	font-size: 14px;
+	font-weight: bold;
+`;
 
-export default function WelcomeHeading({ name = "john doe" }) {
+export default function WelcomeHeading({ name = "john doe", email = "john@notfound.com" }) {
 	return (
 		<Wrapper>
 			<Stack>
 				Welcome
 				<NameCard name={name} />
+				<EmailSub>{email}</EmailSub>
 				<Sub>Share your Feeling</Sub>
 			</Stack>
 		</Wrapper>

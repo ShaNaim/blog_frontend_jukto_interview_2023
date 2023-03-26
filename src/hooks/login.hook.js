@@ -1,6 +1,6 @@
 import { getUserByEmail } from "../api/users.api";
 import { useDispatch } from "react-redux";
-import { setUserState } from "../redux/user.slice";
+import { setUserState } from "../redux/auth.slice";
 import { useNavigate } from "react-router-dom";
 
 export default function useLogin() {
@@ -15,9 +15,8 @@ export default function useLogin() {
 					origin: "email",
 					authError: true,
 				};
-			if (existingUser.password !== user.password)
-				throw { message: "Incorrect Password", origin: "password", authError: true };
-			console.log({ existingUser });
+			// if (existingUser.password === user.password)
+			// 	throw { message: "Incorrect Password", origin: "password", authError: true };
 			dispatch(setUserState(existingUser));
 			route("/");
 		} catch (error) {

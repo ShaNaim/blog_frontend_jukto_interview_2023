@@ -1,31 +1,31 @@
+import React from "react";
+
 import Box from "@mui/material/Box";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NotifyAlert from "../UI/NotifyAlert";
 import Authenticate from "./Authenticate";
-import useRegister from "../../hooks/register.hook";
-import useLogin from "../../hooks/login.hook";
+import useAuthHandler from "../../hooks/auth.hook";
 export default function Auth({ login = false, isPage = false }) {
 	const router = useNavigate();
 	const [isLogin, setIsLogin] = React.useState(login);
 	const [hasError, setHasError] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState(false);
-	const register = useRegister();
-	const loginUser = useLogin();
-	const handleSubmit = async (user) => {
+	// const register = useRegister();
+	// const loginUser = useLogin();
+	const { loginUser, registerUser } = useAuthHandler();
+	const handleSubmit = (user) => {
 		try {
 			if (isLogin) {
-				console.log("login", user);
-				await loginUser(user);
+				loginUser(user);
 			} else {
-				await register(user);
+				registerUser(user);
 			}
 		} catch (error) {
-			console.error(error);
+			console.error({ error });
 			if (error.authError) {
 				setHasError(true);
 				setErrorMessage(error.message);

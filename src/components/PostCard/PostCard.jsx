@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../UI/Button";
 import { Stack } from "@mui/system";
 import Link from "../UI/Link";
-
+import PostHeader from "./PostHeader";
 export const Wrapper = styled.div`
 	background: #fff;
 	padding: 8px;
@@ -47,21 +47,20 @@ export default function PostCard({ post }) {
 		<Wrapper>
 			<Stack alignItems="flex-start" justifyContent="space-between">
 				<Container>
-					<Heading>{post.userName ? post.userName : "John Doe"}</Heading>
-					<Footer>Feeling {post.feeling ? post.feeling : "Happy"}</Footer>
+					<PostHeader userId={post?.userId} />
 					<hr />
 				</Container>
 
 				<Body>
 					<Title>
-						{post.title ? post.title : "the title will contaill a max of 50 words not more"}
+						{post?.title ? post?.title : "the title will contaill a max of 50 words not more"}
 					</Title>
-					{post.body}
+					{post?.body}
 				</Body>
 				<Container>
 					<hr />
 					<Stack sx={{ mt: 1 }} direction="row" alignItems="center" justifyContent="flex-end">
-						<Link to={`/posts/${post.id}`}>
+						<Link to={`/posts/${post?.id}`}>
 							<Button size="small"> See More </Button>
 						</Link>
 					</Stack>

@@ -1,6 +1,6 @@
 import { createNewUser } from "../api/users.api";
 import { useDispatch } from "react-redux";
-import { setUserState } from "../redux/user.slice";
+import { setUserState } from "../redux/auth.slice";
 import { useNavigate } from "react-router-dom";
 
 export default function useRegister() {

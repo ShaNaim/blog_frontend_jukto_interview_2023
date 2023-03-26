@@ -13,7 +13,7 @@ export default function NavBar() {
 	const [hasUser, sethasUser] = React.useState(false);
 	const theme = useTheme();
 	React.useEffect(() => {
-		if (user.email) {
+		if (user && user.email) {
 			sethasUser(true);
 		} else {
 			sethasUser(false);

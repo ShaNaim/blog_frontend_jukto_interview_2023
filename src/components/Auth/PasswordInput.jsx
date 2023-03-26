@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import FunctionButton from "./FunctionButton";
 import { boxSxObject, inputSxObject } from "./styles";
+import AlertDialog from "../AlertDialog";
 export default function PasswordInput({
 	handleClick,
 	password,
@@ -18,6 +19,7 @@ export default function PasswordInput({
 	handleEdit,
 	isLogin,
 }) {
+	const [showDialog, setShowDialog] = React.useState(true);
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [passwordError, setPasswordError] = React.useState(false);
 
@@ -123,6 +125,7 @@ export default function PasswordInput({
 					{isLogin ? "Login" : "Create Account"}
 				</FunctionButton>
 			</Box>
+			<AlertDialog open={showDialog} setOpen={setShowDialog} propmtOnly={true} />
 		</>
 	);
 }

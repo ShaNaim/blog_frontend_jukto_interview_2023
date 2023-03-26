@@ -8,7 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUserState } from "../../redux/user.slice";
+import { deleteUserState } from "../../redux/auth.slice";
 
 function stringToColor(string) {
 	let hash = 0;

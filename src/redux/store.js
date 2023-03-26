@@ -10,8 +10,10 @@
 // });
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userSlice from "./user.slice";
+import userSlice from "./auth.slice";
 import postSlice from "./post.slice";
+import commentsSlice from "./comments.slice";
+import usersListSlice from "./users.slice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
@@ -24,6 +26,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
 	user: userSlice,
 	posts: postSlice,
+	comments: commentsSlice,
+	usersList: usersListSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

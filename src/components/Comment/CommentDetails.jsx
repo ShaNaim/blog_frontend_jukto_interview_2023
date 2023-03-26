@@ -4,8 +4,10 @@ import { Heading } from "../PostCard/PostCard";
 import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import { TextButton } from "../UI/Button";
-import { TextField } from "./CreateComment";
+import { TextField, Box } from "@mui/material";
+
 const TextContainer = styled.p``;
+
 export const Wrapper = styled.div`
 	background: ${(props) => props.theme.color.surface.primary};
 	padding: 12px;
@@ -21,70 +23,75 @@ const Hr = styled.hr`
 	margin-top: 12px;
 `;
 
-export default function CommentDetails({ comment, isOwner, userId, handleUpdate, handleDelete }) {
-	const [userInfo, setUserInfo] = useState(null);
+export default function CommentDetails({
+	comment,
+	isOwner,
+	userEmail,
+	handleUpdate,
+	handleDelete,
+}) {
 	const [isEdit, setIsEdit] = useState(false);
 	const [editValue, setEditValue] = useState(false);
-
-	async function getUserData(id) {
-		const userData = await getUserById(id);
-		if (userData) setUserInfo(userData);
-	}
 
 	function handleEditClick() {
 		setEditValue(comment.body);
 		setIsEdit(true);
 	}
+
 	function handleClick() {
 		setIsEdit(false);
 		handleUpdate(editValue, comment.id);
 	}
 
-	useEffect(() => {
-		getUserData(comment.postedBy);
-	}, [comment.postedBy]);
 	return (
 		<>
-			{userInfo && (
+			{comment && (
 				<>
-					<Wrapper isUser={userId === comment.postedBy}>
+					<Wrapper isUser={userEmail === comment.email}>
 						<Stack direction="row" justifyContent="space-between" alignItems="center">
-							<div>
-								<Heading> {userInfo.name} </Heading>
-								{!isEdit && <TextContainer> {comment.body} </TextContainer>}
-							</div>
-							<Stack direction="row" justifyContent="flex-end">
-								{userId === comment.postedBy ? (
+							<Box sx={{ width: "100%" }}>
+								{!isEdit && (
 									<>
-										{isEdit && (
-											<TextField
-												value={editValue}
-												onChange={(event) => setEditValue(event.target.value)}
-												label="comment"
-											/>
-										)}
-										{isEdit ? (
-											<TextButton onClick={handleClick}>Save</TextButton>
-										) : (
-											<TextButton onClick={handleEditClick}>Edit</TextButton>
-										)}
+										<Heading> {comment.email} </Heading>
+										<TextContainer> {comment.body} </TextContainer>
 									</>
-								) : (
-									<></>
 								)}
-								{(isOwner || userId === comment.postedBy) &&
-									(!isEdit ? (
-										<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
-											Delete
-										</TextButton>
-									) : (
-										<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
-											Cancel
-										</TextButton>
-									))}
-							</Stack>
+								{isEdit && (
+									<TextField
+										variant="standard"
+										multiline
+										value={editValue}
+										onChange={(event) => setEditValue(event.target.value)}
+										label="comment"
+										sx={{ width: "100%" }}
+									/>
+								)}
+							</Box>
 						</Stack>
-						<Hr />
+						<Stack direction="row" justifyContent="flex-end">
+							{userEmail === comment.email ? (
+								<>
+									{isEdit ? (
+										<TextButton onClick={handleClick}>Save</TextButton>
+									) : (
+										<TextButton onClick={handleEditClick}>Edit</TextButton>
+									)}
+								</>
+							) : (
+								<></>
+							)}
+							{(isOwner || userEmail === comment.email) &&
+								(!isEdit ? (
+									<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
+										Delete
+									</TextButton>
+								) : (
+									<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
+										Cancel
+									</TextButton>
+								))}
+						</Stack>
+						{!isEdit && <Hr />}
 					</Wrapper>
 				</>
 			)}

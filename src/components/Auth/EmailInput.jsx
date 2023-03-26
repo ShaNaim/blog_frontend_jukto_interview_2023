@@ -7,7 +7,7 @@ import NotifyAlert from "../UI/NotifyAlert";
 import FunctionButton from "./FunctionButton";
 import { boxSxObject, inputSxObject } from "./styles";
 import { checkEmailExists } from "../../api/auth.api";
-
+import useAuthHandler from "../../hooks/auth.hook";
 export default function EmailInput({ handleClick, isLogin, emailValue, nameValue, contactValue }) {
 	const [email, setEmail] = React.useState(emailValue ? emailValue : "");
 	const [name, setName] = React.useState(nameValue ? nameValue : "");
@@ -16,13 +16,14 @@ export default function EmailInput({ handleClick, isLogin, emailValue, nameValue
 	const [contactError, setContactError] = React.useState(false);
 	const [alertMessage, setAlertMessage] = React.useState("");
 	const [alert, setAlert] = React.useState(false);
+	const { checkUserExists } = useAuthHandler();
 	const handleEmail = async () => {
 		try {
 			if (ValidateEmail(email)) {
 				if (isLogin) return handleClick(email);
 				if (contact && contact.length > 9 && contact.length < 12) {
-					const emailExists = await checkEmailExists(email);
-					if (emailExists) {
+					const emailExists = checkUserExists(email);
+					if (emailExists.length !== 0) {
 						setEmailError(true);
 						setAlertMessage("Email already Exists , Please use a different Email or Register");
 						setAlert(true);

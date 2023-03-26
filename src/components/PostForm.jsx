@@ -7,7 +7,7 @@ import Heading from "./UI/Heading";
 import NotifyAlert from "./UI/NotifyAlert";
 import { validatePostData } from "../utils/validation.util";
 
-import { MAX_FEELING, MAX_TITLE } from "../utils/const.provider";
+import { MAX_TITLE } from "../utils/const.provider";
 
 const SubmitButton = styled(Button)`
 	width: 100px;
@@ -19,14 +19,10 @@ export default function PostForm({ handleSubmit, updateData }) {
 	const [description, setDescription] = useState(
 		updateData && updateData.body ? updateData.body : ""
 	);
-	const [feeling, setFeeling] = useState(
-		updateData && updateData.feeling ? updateData.feeling : ""
-	);
 	const [alertMessage, setAlertMessage] = useState("");
 
 	const [titleError, setTitleError] = useState(false);
 	const [descriptionError, setDescriptionError] = useState(false);
-	const [feelingError, setFeelingError] = useState(false);
 	const [alert, setAlert] = useState(false);
 
 	function handleSetTitle(event) {
@@ -36,27 +32,18 @@ export default function PostForm({ handleSubmit, updateData }) {
 			setTitleError(true);
 		}
 	}
-	function handleSetFeeling(event) {
-		setFeelingError(false);
-		if (feeling.split("").length > MAX_FEELING) {
-			setFeelingError(true);
-		}
-		setFeeling(event.target.value);
-	}
 
 	async function handleClick() {
-		const validated = validatePostData(title, feeling, description);
+		const validated = validatePostData(title, description);
 		if (!validated.success) {
 			if (validated.origin === "title") setTitleError(true);
-			if (validated.origin === "feeling") setFeelingError(true);
 			if (validated.origin === "desc") setDescriptionError(true);
 			setAlertMessage(validated.message);
 			setAlert(true);
 		} else {
-			handleSubmit({ title, feeling, description });
+			handleSubmit({ title, description });
 			setTitle("");
 			setDescription("");
-			setFeeling("");
 		}
 	}
 
@@ -72,15 +59,6 @@ export default function PostForm({ handleSubmit, updateData }) {
 					value={title}
 					onChange={handleSetTitle}
 					helperText={`Max ${MAX_TITLE} char`}
-				/>
-				<Input
-					error={feelingError}
-					id="filled-basic"
-					label="Feeling"
-					sx={{ width: { xs: "100%", sm: "40%", md: "30%", lg: "20%" } }}
-					value={feeling}
-					onChange={handleSetFeeling}
-					helperText={`Max ${MAX_FEELING} char`}
 				/>
 				<Input
 					error={descriptionError}

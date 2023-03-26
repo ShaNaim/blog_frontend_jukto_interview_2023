@@ -10,7 +10,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="down" ref={ref} {...props} />;
 });
 
-export default function AlertDialog({ open, setOpen, handleSubmit }) {
+export default function AlertDialog({ open, setOpen, handleSubmit, propmtOnly }) {
 	const handleAgreeAndClose = () => {
 		setOpen(false);
 		handleSubmit();
@@ -20,6 +20,7 @@ export default function AlertDialog({ open, setOpen, handleSubmit }) {
 		setOpen(false);
 	};
 
+	if (propmtOnly) return <PromptOnlyDialog open={open} handleClose={handleClose} />;
 	return (
 		<>
 			<Dialog
@@ -41,6 +42,41 @@ export default function AlertDialog({ open, setOpen, handleSubmit }) {
 					<Button isDanger={true} onClick={handleAgreeAndClose}>
 						Confirm
 					</Button>
+				</DialogActions>
+			</Dialog>
+		</>
+	);
+}
+
+function PromptOnlyDialog({ open, handleClose }) {
+	return (
+		<>
+			<Dialog
+				open={open}
+				TransitionComponent={Transition}
+				keepMounted
+				onClose={handleClose}
+				aria-describedby="alert-dialog-delete-description"
+				sx={{ borderRadius: "18px" }}
+			>
+				<DialogTitle>Not Functional</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-slide-description">
+						This Password Section is just to Demonstrate a visual aspect of an authentication
+						process.
+					</DialogContentText>
+					<DialogContentText id="alert-dialog-slide-description">
+						The password feild(s) will still throw an error if no value is provided or both field
+						don't match.
+					</DialogContentText>
+					<br />
+					<hr />
+					<DialogContentText sx={{ color: "tomato" }} id="alert-dialog-slide-description">
+						Just enter any value and press continue to proceed
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}> Got it </Button>
 				</DialogActions>
 			</Dialog>
 		</>

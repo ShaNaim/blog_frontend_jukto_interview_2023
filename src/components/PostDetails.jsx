@@ -5,9 +5,10 @@ import styled from "styled-components";
 import { TextButton } from "./UI/Button";
 import PostUpdate from "./PostUpdate";
 import { useNavigate } from "react-router-dom";
-import { deletePost } from "../api/posts.api";
+// import { deletePost } from "../api/posts.api";
 import AlertDialog from "./AlertDialog";
-
+import PostHeader from "./PostCard/PostHeader";
+import usePostHandler from "../hooks/posts.hook";
 const CustomBody = styled(Body)`
 	min-height: auto;
 	max-height: 100%;
@@ -30,12 +31,13 @@ export default function PostDetails({ post, userId, userName, reFetch }) {
 	const [isEdit, setIsEdit] = useState(false);
 	const [deleteAlert, setDeleteAlert] = useState(false);
 	const router = useNavigate();
+	const { deletePost } = usePostHandler();
 	function handleEditClick() {
 		setIsEdit(true);
 	}
 
 	async function handleDelete() {
-		await deletePost(post.id);
+		deletePost(post.id);
 		router("/");
 	}
 
@@ -67,10 +69,7 @@ export default function PostDetails({ post, userId, userName, reFetch }) {
 					<Stack alignItems="flex-start" justifyContent="space-between">
 						<Container>
 							<Stack direction="row" justifyContent="space-between" alignItems="center">
-								<div>
-									<Heading>{post.userName ? post.userName : "John Doe"}</Heading>
-									<Footer>Feeling {post.feeling ? post.feeling : "Happy"}</Footer>
-								</div>
+								<PostHeader userId={post.userId} />
 								<EditButtons
 									userId={userId}
 									ownerId={post.userId}
@@ -99,7 +98,7 @@ export default function PostDetails({ post, userId, userName, reFetch }) {
 
 const EditButtons = ({ userId, ownerId, isEdit, setIsEdit, handleEditClick, handleDelete }) => {
 	return (
-		<Stack direction="row" justifyContent="flex-end">
+		<Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-end">
 			{userId === ownerId ? (
 				<>
 					<EditButtonContainer>

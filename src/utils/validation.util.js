@@ -22,20 +22,6 @@ export function validatePostData(title, feelings, description) {
 			message: "Description Must be Provided",
 		};
 	}
-	if (feelings === "") {
-		return {
-			success: false,
-			origin: "feeling",
-			message: "Feeling Must be Provided",
-		};
-	}
-	if (feelings.split("").length >= MAX_FEELING || feelings === "") {
-		return {
-			success: false,
-			origin: "feeling",
-			message: "Feeling Can't exceed " + MAX_FEELING + " char",
-		};
-	}
 	return {
 		success: true,
 		origin: "",
