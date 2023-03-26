@@ -4,7 +4,7 @@ import { Heading } from "../PostCard/PostCard";
 import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import { TextButton } from "../UI/Button";
-import { TextField } from "./CreateComment";
+import TextField from "@mui/material/TextField";
 const TextContainer = styled.p``;
 export const Wrapper = styled.div`
 	background: ${(props) => props.theme.color.surface.primary};
@@ -49,40 +49,48 @@ export default function CommentDetails({ comment, isOwner, userId, handleUpdate,
 				<>
 					<Wrapper isUser={userId === comment.postedBy}>
 						<Stack direction="row" justifyContent="space-between" alignItems="center">
-							<div>
-								<Heading> {userInfo.name} </Heading>
-								{!isEdit && <TextContainer> {comment.body} </TextContainer>}
-							</div>
-							<Stack direction="row" justifyContent="flex-end">
-								{userId === comment.postedBy ? (
+							<div style={{ width: "100%" }}>
+								{!isEdit && (
 									<>
-										{isEdit && (
-											<TextField
-												value={editValue}
-												onChange={(event) => setEditValue(event.target.value)}
-												label="comment"
-											/>
-										)}
-										{isEdit ? (
-											<TextButton onClick={handleClick}>Save</TextButton>
-										) : (
-											<TextButton onClick={handleEditClick}>Edit</TextButton>
-										)}
+										<Heading> {userInfo.name} </Heading>
+										<TextContainer> {comment.body} </TextContainer>
 									</>
-								) : (
-									<></>
 								)}
-								{(isOwner || userId === comment.postedBy) &&
-									(!isEdit ? (
-										<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
-											Delete
-										</TextButton>
+								{isEdit && (
+									<TextField
+										sx={{ width: "100%", mb: { xs: 1, md: 2 } }}
+										value={editValue}
+										onChange={(event) => setEditValue(event.target.value)}
+										label="comment"
+										multiline
+										variant="standard"
+									/>
+								)}
+							</div>
+						</Stack>
+
+						<Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-end">
+							{userId === comment.postedBy ? (
+								<>
+									{isEdit ? (
+										<TextButton onClick={handleClick}>Save</TextButton>
 									) : (
-										<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
-											Cancel
-										</TextButton>
-									))}
-							</Stack>
+										<TextButton onClick={handleEditClick}>Edit</TextButton>
+									)}
+								</>
+							) : (
+								<></>
+							)}
+							{(isOwner || userId === comment.postedBy) &&
+								(!isEdit ? (
+									<TextButton onClick={() => handleDelete(comment.id)} isDanger={true}>
+										Delete
+									</TextButton>
+								) : (
+									<TextButton onClick={() => setIsEdit(false)} isDanger={true}>
+										Cancel
+									</TextButton>
+								))}
 						</Stack>
 						<Hr />
 					</Wrapper>

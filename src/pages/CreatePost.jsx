@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import WelcomeHeading from "../components/WelcomeHeading";
 import PostForm from "../components/PostForm";
-import { getUserByEmail } from "../api/users.api";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/posts.api";
 import { addPostToState } from "../redux/post.slice";
-import NotifyAlert from "../components/UI/NotifyAlert";
+
 export default function CreatePost() {
 	const user = useSelector((state) => state.user.data);
-	const [alert, setAlert] = useState(false);
-	const [alertData, setAlertData] = useState(false);
 	const dispatch = useDispatch();
 	const router = useNavigate();
 	async function handleClick(data) {
@@ -25,16 +22,11 @@ export default function CreatePost() {
 			});
 			if (!newPost) throw "Create Falied";
 			dispatch(addPostToState(newPost));
-			setAlertData({
-				url: `/posts/${newPost.id}`,
-				message: "New Post Created , Click to See",
-			});
-			setAlert(true);
+			router(`/posts/${newPost.id}`);
 		} catch (error) {
 			console.error(error);
 		}
 	}
-
 	useEffect(() => {
 		if (!user.email) {
 			router("/login");
@@ -51,7 +43,6 @@ export default function CreatePost() {
 					<PostForm handleSubmit={handleClick} />
 				</Paper>
 			</Stack>
-			<NotifyAlert open={alert} setOpen={setAlert} type="success" hasData={alertData} />
 		</Box>
 	);
 }

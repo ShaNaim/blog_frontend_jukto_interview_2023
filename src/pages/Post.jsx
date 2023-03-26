@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { getPostById } from "../api/posts.api";
 import {
 	getCommentsByPostId,
@@ -7,15 +9,19 @@ import {
 	updateComment,
 	deleteComment,
 } from "../api/comments.api";
-import { Box, Stack, Paper } from "@mui/material";
+
+// Components
 import PostCardSkeleton from "../components/PostCard/PostCardSkeleton";
-import PostDetails from "../components/PostDetails";
 import CommentDetails from "../components/Comment/CommentDetails";
 import CreateComment from "../components/Comment/CreateComment";
-import { useSelector } from "react-redux";
+import { TextButton } from "../components/UI/Button";
+import PostDetails from "../components/PostDetails";
 import Skeleton from "@mui/material/Skeleton";
 import Link from "../components/UI/Link";
-import { TextButton } from "../components/UI/Button";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+
 export default function Post() {
 	const { postId } = useParams();
 	const currentUser = useSelector((state) => state.user.data);

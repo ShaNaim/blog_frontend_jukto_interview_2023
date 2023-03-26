@@ -25,9 +25,9 @@ export default function NotifyAlert({ open, setOpen, type, message, hasData }) {
 				onClose={handleClose}
 			>
 				{hasData ? (
-					<Link to={hasData.url}>
+					<Link to={hasData}>
 						<Alert severity={type} sx={{ width: "100%" }}>
-							{hasData.message}
+							New Post Created , Click to See
 						</Alert>
 					</Link>
 				) : (

@@ -1,6 +1,7 @@
 import React from "react";
 import PostForm from "./PostForm";
 import { updatePost } from "../api/posts.api";
+
 export default function PostUpdate({ post, setEdit, user, reFetch }) {
 	async function handleUpdate(data) {
 		const updatedPost = await updatePost(

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, Stack, Paper } from "@mui/material";
 import WelcomeHeading from "../components/WelcomeHeading";
-import PostForm from "../components/PostForm";
-import { getUserByEmail } from "../api/users.api";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../api/posts.api";
+import { getPostsByUserId } from "../api/posts.api";
 import { setPostState } from "../redux/post.slice";
 import PaginationList from "../components/PaginationList";
 import { postsUserHaveComentedOn } from "../api/comments.api";
@@ -24,8 +22,12 @@ export default function Dashboard() {
 
 	async function getData() {
 		const result = await getAllPosts();
-
 		dispatch(setPostState(result));
+	}
+
+	async function getUsersData(id) {
+		const list = await getPostsByUserId(id);
+		setPostsList(list);
 	}
 
 	async function getCommentedList() {
@@ -46,14 +48,15 @@ export default function Dashboard() {
 	}, [user]);
 
 	useEffect(() => {
+		console.log({ posts });
 		if (posts.length === 0) {
+			console.log({ if: true });
 			getData();
 		} else {
-			const usersList = posts.filter((post) => post.userId === user.id);
-			setPostsList(usersList);
+			getUsersData(user.id);
 			getCommentedList();
 		}
-	}, [posts]);
+	}, [posts, user]);
 
 	return (
 		<Box sx={{ mt: 2 }}>
