@@ -24,7 +24,7 @@ export default function NavBar() {
 			<AppBar sx={{ background: theme.color.main }} position="static">
 				<Toolbar>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						<Link to="/">{import.meta.env.VITE_APP_NAME}</Link>
+						<Link to="/">Blog</Link>
 					</Typography>
 					{!hasUser ? (
 						<Link to="/login">
